@@ -1,0 +1,22 @@
+<?php
+/**
+ * To remove all content & content type on uninstallation. 
+ */
+function new_custom_content_article_uninstall() {
+
+    // Delete all nodes of given content type.
+    $storage_handler = \Drupal::entityTypeManager()
+      ->getStorage('node');
+    $nodes = $storage_handler->loadByProperties(['type' => 'new_article_page']);
+    if(sizeof($nodes) > 0){
+      $storage_handler->delete($nodes);
+    }
+  
+    // Delete content type.
+    $content_type = \Drupal::entityTypeManager()
+      ->getStorage('node_type')
+      ->load('new_article_page');
+      if($content_type != null){
+          $content_type->delete();
+      }
+  }
